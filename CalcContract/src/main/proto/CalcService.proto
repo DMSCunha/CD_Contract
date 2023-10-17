@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "calcstubs";
+
+package calcservice; // package do proto
+
+// serviço com operações sobre números
+service CalcService {
+    // add two numbers
+    rpc add(AddOperands) returns (Result);
+	// generate the number powers with exponents betwwen 1 and maximum 
+	  rpc generatePowers (NumberAndMaxExponent) returns (stream Result);
+	// add a sequence of numbers, ex: 1,2, 10, 5 = 18
+    rpc addSeqOfNumbers (stream Number) returns (Result);
+	// Multiple add operations using a bidirecional stream
+    rpc multipleAdd(stream AddOperands) returns (stream Result);
+}
+
+message AddOperands {
+    string Id = 1;
+    int32 op1 = 2;
+    int32 op2 = 3;
+}
+
+message NumberAndMaxExponent {
+  string Id = 1;
+  int32 baseNumber= 2;
+  int32 maxExponent = 3;
+}
+message Number {
+    int32 num = 1;
+}
+
+message Result {
+  string Id = 1;
+  int32 res = 2;
+}
